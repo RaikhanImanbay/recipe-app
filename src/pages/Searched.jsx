@@ -30,11 +30,11 @@ function Searched() {
                     </Link>
                     </Card>
                 )
-            })}
+            })};
 
         </Grid>
     )
-}
+};
 
 const Grid = styled.div`
   display: grid;
