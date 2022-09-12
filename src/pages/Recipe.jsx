@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 function Recipe() {
   let params = useParams();
-  const [details, setDetails] =  useState({});
+  const [details, setDetails] = useState({});
   const [activeTab, setActiveTab] = useState('instructions');
 
   const fetchDetails = async () => {
@@ -16,31 +16,33 @@ function Recipe() {
   useEffect(() => {
     fetchDetails();
   }, [params.name]);
-  
+
   return (
-   <DetailWrapper>
-    <div>
-      <h2>{details.title}</h2>
-      <img src={details.image} alt={details.title}/>
-    </div>
-    <Info>
-      <Button className={activeTab === 'instructions' ? 'active' : ''} onClick={() => setActiveTab('instructions')}>Instructions</Button>
-      <Button className={activeTab === 'ingredients' ? 'active' : ''}  onClick={() => setActiveTab('ingredients')}>Ingredients</Button>
-      {activeTab === 'instructions' && (
-        <div>
-      <h3 dangerouslySetInnerHTML ={{__html: details.summary}}></h3>
-      <h3 dangerouslySetInnerHTML ={{__html: details.instructions}}></h3>
-    </div>
-      )}
-        {activeTab === 'ingredients' && (
-            <ul>
-      {details.extendedIngredients.map((ingredient) => {
-        <li key={ingredient.id}>{ingredient.original}</li>
-      })}
-    </ul>
+    <DetailWrapper>
+      <div>
+        <h2>{details.title}</h2>
+        <img src={details.image} alt={details.title} />
+      </div>
+      <Info>
+        <Button className={activeTab === 'instructions' ? 'active' : ''} onClick={() => setActiveTab('instructions')}>Instructions</Button>
+        <Button className={activeTab === 'ingredients' ? 'active' : ''} onClick={() => setActiveTab('ingredients')}>Ingredients</Button>
+        {activeTab === 'instructions' && (
+          <div>
+            <h3 dangerouslySetInnerHTML={{ __html: details.summary }}></h3>
+            <h3 dangerouslySetInnerHTML={{ __html: details.instructions }}></h3>
+          </div>
         )}
-    </Info>
-   </DetailWrapper>
+        {activeTab === 'ingredients' && (
+          <ul>
+            {details.extendedIngredients && (
+              details.extendedIngredients.map((ingredient) => (
+                <li key={ingredient.id}>{ingredient.original}</li>
+              ))
+            )}
+          </ul>
+        )}
+      </Info>
+    </DetailWrapper>
   )
 }
 
@@ -64,7 +66,7 @@ const DetailWrapper = styled.div`
   }
 `;
 
-  const Button = styled.button`
+const Button = styled.button`
     padding: 1rem 2rem;
     color: #313131;
     background: white;
@@ -73,7 +75,7 @@ const DetailWrapper = styled.div`
     font-weight: 600;
   `;
 
-  const Info = styled.div`
+const Info = styled.div`
     margin-left: 10rem;
   `
 
